@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Middle East On Fire — Interactive Map</title>
+
+  <!-- Open Graph tags — controls LinkedIn/WhatsApp preview -->
+  <meta property="og:title" content="Middle East On Fire — Interactive Map">
+  <meta property="og:description" content="Click any country. See animated maps of US bases, Iran proxies, India oil routes, Hormuz crisis. Free educational tool.">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🔥 Middle East <span>On Fire</span></h1>
+    <p>Interactive Geopolitics Map — Click any country or scene</p>
+    <div class="badges">
+      <span class="badge red">US–Iran Conflict</span>
+      <span class="badge blue">Proxy Wars</span>
+      <span class="badge gold">Oil & Hormuz</span>
+      <span class="badge orange">India's Stakes</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- STATS ROW -->
+    <div class="stats-bar">
+      <div class="stat"><span class="num">8.5M</span><span class="lbl">Indians in Gulf</span></div>
+      <div class="stat"><span class="num">21M</span><span class="lbl">Barrels/day Hormuz</span></div>
+      <div class="stat"><span class="num">88%</span><span class="lbl">India oil imported</span></div>
+      <div class="stat"><span class="num">$42B</span><span class="lbl">Gulf remittances/yr</span></div>
+      <div class="stat"><span class="num">170+</span><span class="lbl">Attacks on US bases</span></div>
+      <div class="stat"><span class="num">300+</span><span class="lbl">Iran drones at Israel</span></div>
+    </div>
+
+    <!-- SCENE BUTTONS -->
+    <div class="scene-bar">
+      <button class="sbtn active" onclick="showScene('overview',this)">🗺️ Overview</button>
+      <button class="sbtn" onclick="showScene('us',this)">🇺🇸 US Bases</button>
+      <button class="sbtn" onclick="showScene('iran',this)">🇮🇷 Iran Proxies</button>
+      <button class="sbtn" onclick="showScene('israel',this)">🇮🇱 Israel</button>
+      <button class="sbtn" onclick="showScene('india',this)">🇮🇳 India's Links</button>
+      <button class="sbtn" onclick="showScene('hormuz',this)">⚠️ Hormuz</button>
+      <button class="sbtn" onclick="showScene('redsea',this)">🚢 Red Sea</button>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="info-panel" id="infoBox">
+      Click a scene button above or tap any country to learn its role.
+    </div>
+
+    <!-- MAP -->
+    <div class="map-wrap">
+      <svg id="map" viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="aRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M2 2L8 5L2 8" fill="none" stroke="#cc2222" stroke-width="2"/>
+          </marker>
+          <marker id="aGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M2 2L8 5L2 8" fill="none" stroke="#e8a020" stroke-width="2"/>
+          </marker>
+          <marker id="aBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M2 2L8 5L2 8" fill="none" stroke="#1a7fc1" stroke-width="2"/>
+          </marker>
+          <marker id="aGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M2 2L8 5L2 8" fill="none" stroke="#1e8449" stroke-width="2"/>
+          </marker>
+        </defs>
+
+        <!-- Ocean -->
+        <rect width="780" height="500" fill="#0d2137"/>
+
+        <!-- Water labels -->
+        <text x="82" y="292" text-anchor="middle" font-size="8" fill="#5a9fd4">Red Sea</text>
+        <text x="368" y="332" text-anchor="middle" font-size="8" fill="#5a9fd4">Persian Gulf</text>
+        <text x="519" y="361" text-anchor="middle" font-size="8" fill="#5a9fd4">Arabian Sea</text>
+
+        <!-- COUNTRIES — each is a clickable group -->
+        <g class="country" onclick="clickCountry('libya')">
+          <rect x="18" y="108" width="90" height="108" rx="4" fill="#3a4a5a" stroke="#2a3a4a"/>
+          <text x="63" y="165" text-anchor="middle" font-size="11" fill="#aaa" font-weight="bold">LIBYA</text>
+        </g>
+        <g class="country" onclick="clickCountry('egypt')">
+          <rect x="108" y="140" width="96" height="102" rx="4" fill="#4a5a6a" stroke="#3a4a5a"/>
+          <text x="156" y="194" text-anchor="middle" font-size="11" fill="#ccc" font-weight="bold">EGYPT</text>
+        </g>
+        <g class="country" onclick="clickCountry('turkey')">
+          <rect x="168" y="35" width="158" height="72" rx="4" fill="#4a5560" stroke="#3a4550"/>
+          <text x="247" y="74" text-anchor="middle" font-size="11" fill="#ccc" font-weight="bold">TURKEY</text>
+        </g>
+        <g class="country" onclick="clickCountry('syria')">
+          <rect x="225" y="108" width="90" height="66" rx="4" fill="#5a6040" stroke="#4a5030"/>
+          <text x="270" y="144" text-anchor="middle" font-size="10" fill="#ccc" font-weight="bold">SYRIA</text>
+        </g>
+        <g class="country" onclick="clickCountry('lebanon')">
+          <rect x="222" y="172" width="34" height="40" rx="3" fill="#8b9467" stroke="#6a7347" stroke-width="1.5"/>
+          <text x="239" y="196" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">LEB</text>
+        </g>
+        <g class="country" onclick="clickCountry('israel')">
+          <rect x="196" y="183" width="28" height="42" rx="3" fill="#1a5276" stroke="#2a8fd6" stroke-width="1.5"/>
+          <text x="210" y="207" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">ISR</text>
+        </g>
+        <g class="country" onclick="clickCountry('gaza')">
+          <circle cx="191" cy="204" r="7" fill="#e0c000" stroke="#ffee00" stroke-width="1.5"/>
+          <text x="175" y="220" text-anchor="middle" font-size="7" fill="#ffee00">GAZA</text>
+        </g>
+        <g class="country" onclick="clickCountry('jordan')">
+          <rect x="226" y="176" width="72" height="80" rx="4" fill="#605840" stroke="#504830"/>
+          <text x="262" y="219" text-anchor="middle" font-size="10" fill="#ccc" font-weight="bold">JORDAN</text>
+        </g>
+        <g class="country" onclick="clickCountry('iraq')">
+          <rect x="296" y="102" width="118" height="138" rx="4" fill="#7d6608" stroke="#bb9920" stroke-width="1.5"/>
+          <text x="355" y="174" text-anchor="middle" font-size="14" fill="#ffe080" font-weight="bold">IRAQ</text>
+        </g>
+        <g class="country" onclick="clickCountry('iran')">
+          <rect x="414" y="68" width="168" height="162" rx="4" fill="#7a1a1a" stroke="#cc2222" stroke-width="2"/>
+          <text x="498" y="152" text-anchor="middle" font-size="16" fill="#ffcccc" font-weight="bold">IRAN</text>
+        </g>
+        <g class="country" onclick="clickCountry('kuwait')">
+          <rect x="368" y="240" width="42" height="36" rx="3" fill="#6b6b1a" stroke="#9b9b3a"/>
+          <text x="389" y="261" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">KWT</text>
+        </g>
+        <g class="country" onclick="clickCountry('saudi')">
+          <rect x="216" y="256" width="168" height="140" rx="4" fill="#8b6914" stroke="#ccaa30" stroke-width="1.5"/>
+          <text x="300" y="326" text-anchor="middle" font-size="12" fill="#ffe090" font-weight="bold">SAUDI ARABIA</text>
+        </g>
+        <g class="country" onclick="clickCountry('qatar')">
+          <rect x="415" y="280" width="28" height="36" rx="3" fill="#5b1a6b" stroke="#8b3a9b"/>
+          <text x="429" y="301" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">QAT</text>
+        </g>
+        <g class="country" onclick="clickCountry('bahrain')">
+          <rect x="403" y="274" width="16" height="18" rx="2" fill="#1a5276" stroke="#2a8fd6"/>
+          <text x="411" y="286" text-anchor="middle" font-size="7" fill="#fff">BHR</text>
+        </g>
+        <g class="country" onclick="clickCountry('uae')">
+          <rect x="446" y="296" width="56" height="44" rx="3" fill="#1a6b5a" stroke="#2a9b8a"/>
+          <text x="474" y="321" text-anchor="middle" font-size="10" fill="#cff" font-weight="bold">UAE</text>
+        </g>
+        <g class="country" onclick="clickCountry('oman')">
+          <rect x="480" y="270" width="80" height="108" rx="4" fill="#2e7d32" stroke="#4a9d42"/>
+          <text x="520" y="328" text-anchor="middle" font-size="10" fill="#cfc" font-weight="bold">OMAN</text>
+        </g>
+        <g class="country" onclick="clickCountry('yemen')">
+          <rect x="230" y="396" width="132" height="60" rx="4" fill="#c0392b" stroke="#e05040" stroke-width="1.5"/>
+          <text x="296" y="430" text-anchor="middle" font-size="12" fill="#ffcccc" font-weight="bold">YEMEN</text>
+        </g>
+        <g class="country" onclick="clickCountry('afghanistan')">
+          <rect x="568" y="50" width="90" height="88" rx="4" fill="#45687d" stroke="#557888"/>
+          <text x="613" y="97" text-anchor="middle" font-size="9" fill="#ccc" font-weight="bold">AFGHAN.</text>
+        </g>
+        <g class="country" onclick="clickCountry('pakistan')">
+          <rect x="580" y="132" width="100" height="100" rx="4" fill="#1b5e20" stroke="#2a8e30"/>
+          <text x="630" y="185" text-anchor="middle" font-size="10" fill="#cfc" font-weight="bold">PAKISTAN</text>
+        </g>
+        <g class="country" onclick="clickCountry('india')">
+          <rect x="598" y="228" width="108" height="134" rx="4" fill="#cc5520" stroke="#ff8855" stroke-width="2"/>
+          <text x="652" y="296" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">INDIA</text>
+        </g>
+
+        <!-- Dynamic overlay — filled by JavaScript -->
+        <g id="overlay"></g>
+
+        <!-- Watermark -->
+        <text x="390" y="492" text-anchor="middle" font-size="9" fill="#1e3a5f">
+          Built by Anurag Dwivedi · Share freely · Click any country
+        </text>
+      </svg>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend" id="legendBox"></div>
+
+  </main>
+
+  <footer>
+    <p>🗺️ Middle East Interactive Map · Free educational tool · Built by Anurag Dwivedi</p>
+    <p>Share on <a href="https://www.linkedin.com/in/anurag-dwivedi-1035821aa" target="_blank">LinkedIn</a> · Works on all devices · No login needed</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
